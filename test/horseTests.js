@@ -12,63 +12,115 @@ for(let i=0; i<16; i++) {
 }
 
 myBoard[11][2] = "h";
-myBoard[9][1] = "B";
-myBoard[10][4] = "R";
-myBoard[12][4] = "R";
-myBoard[13][3] = "Q";
-myBoard[12][0] = "H";
+myBoard[9][3] = "b";
+myBoard[9][1] = "p";
+myBoard[13][3] = "q";
+myBoard[13][1] = "k";
+myBoard[10][4] = "r";
+myBoard[10][0] = "h";
+myBoard[12][4] = "r";
+myBoard[12][0] = "h";
 
-myBoard[4][0] = "h";
-myBoard[2][1] = "k";
-myBoard[3][2] = "Q";
-myBoard[5][2] = "p";
+let blackHorse = new Horse("black", 11, 2);
 
-myBoard[1][6] = "H";
-myBoard[0][4] = "q";
-myBoard[0][8] = "r";
-myBoard[3][5] = "p";
-myBoard[3][7] = "r";
-myBoard[2][4] = "b";
+describe("Horse / Black / getMoves()", function() {
+    it("should not return any moves from (11,2)", function() {              
+        assert.deepStrictEqual(blackHorse.getMoves(myBoard), []);
+    })
+    it("should return 1 move from (11,2) to (9,3)", function() {
+        myBoard[9][3] = "Q";        
+        assert.deepStrictEqual(blackHorse.getMoves(myBoard), [[11,2,9,3,50]]);
+    })
+    it("should return 1 move from (11,2) to (9,1)", function() {
+        myBoard[9][3] = "b";
+        myBoard[9][1] = " ";        
+        assert.deepStrictEqual(blackHorse.getMoves(myBoard), [[11,2,9,1,30]]);
+    })
+    it("should return 1 move from (11,2) to (13,3)", function() {
+        myBoard[9][1] = "h";
+        myBoard[13][3] = "H";        
+        assert.deepStrictEqual(blackHorse.getMoves(myBoard), [[11,2,13,3,300]]);
+    })
+    it("should return 1 move from (11,2) to (13,1)", function() {
+        myBoard[13][3] = "k";
+        myBoard[13][1] = "B";        
+        assert.deepStrictEqual(blackHorse.getMoves(myBoard), [[11,2,13,1,400]]);
+    })
+    it("should return 1 move from (11,2) to (10,4)", function() {
+        myBoard[13][1] = "q";
+        myBoard[10][4] = "R";        
+        assert.deepStrictEqual(blackHorse.getMoves(myBoard), [[11,2,10,4,600]]);
+    })
+    it("should return 1 move from (11,2) to (10,0)", function() {
+        myBoard[10][4] = "b";
+        myBoard[10][0] = " ";        
+        assert.deepStrictEqual(blackHorse.getMoves(myBoard), [[11,2,10,0,30]]);
+    })
+    it("should return 1 move from (11,2) to (12,4)", function() {
+        myBoard[10][0] = "p";
+        myBoard[12][4] = "K";        
+        assert.deepStrictEqual(blackHorse.getMoves(myBoard), [[11,2,12,4,1000]]);
+    })
+    it("should return 1 move from (11,2) to (12,0)", function() {
+        myBoard[12][4] = "k";
+        myBoard[12][0] = "Q";        
+        assert.deepStrictEqual(blackHorse.getMoves(myBoard), [[11,2,12,0,50]]);
+    })        
+})
 
-myBoard[13][11] = "H";
-myBoard[11][12] = "Q";
-myBoard[11][10] = "r";
-myBoard[15][12] = "p";
-myBoard[15][10] = "R";
-myBoard[12][9] = "k";
-myBoard[14][13] = "k";
-myBoard[14][9] = "B";
+myBoard[5][11] = "H";
+myBoard[3][12] = "B";
+myBoard[3][10] = "P";
+myBoard[7][12] = "Q";
+myBoard[7][10] = "K";
+myBoard[4][13] = "R";
+myBoard[4][9] = "Q";
+myBoard[6][13] = "R";
+myBoard[6][9] = "H";
 
-describe("Horse / getMoves()", function() {
-    it("Black horse / should return 8 moves from (11,2)", function() {
-        let horse = new Horse("black", 11, 2);
-        assert.deepStrictEqual(horse.getMoves(myBoard), [[11,2,9,3,30], [11,2,9,1,400], [11,2,13,3,50], [11,2,13,1,30], [11,2,10,4,600], [11,2,10,0,30], [11,2,12,4,600], [11,2,12,0,300]]);
+let whiteHorse = new Horse("white", 5, 11);
+
+describe("Horse / White / getMoves()", function() {
+    it("should not return any moves from (5,11)", function() {              
+        assert.deepStrictEqual(whiteHorse.getMoves(myBoard), []);
     })
-    it("Black horse / should return 2 moves from (4,0)", function() {
-        let horse = new Horse("black", 4, 0);
-        assert.deepStrictEqual(horse.getMoves(myBoard), [[4,0,6,1,30], [4,0,3,2,50]]);
+    it("should return 1 move from (5,11) to (3,12)", function() {
+        myBoard[3][12] = "q";        
+        assert.deepStrictEqual(whiteHorse.getMoves(myBoard), [[5,11,3,12,50]]);
     })
-    it("Black horse / should not return any move from (4,0)", function() {
-        let horse = new Horse("black", 4, 0);
-        myBoard[6][1] = "b";
-        myBoard[3][2] = "q";        
-        assert.deepStrictEqual(horse.getMoves(myBoard), []);
+    it("should return 1 move from (5,11) to (3,10)", function() {
+        myBoard[3][12] = "B";
+        myBoard[3][10] = "p";        
+        assert.deepStrictEqual(whiteHorse.getMoves(myBoard), [[5,11,3,10,100]]);
     })
-    it("White horse / should return 6 moves from (1,6)", function() {
-        let horse = new Horse("white", 1, 6);
-        assert.deepStrictEqual(horse.getMoves(myBoard), [[1,6,3,7,600], [1,6,3,5,100], [1,6,0,8,600], [1,6,0,4,50], [1,6,2,8,30], [1,6,2,4,400]]);
+    it("should return 1 move from (5,11) to (7,12)", function() {
+        myBoard[3][10] = "H";
+        myBoard[7][12] = "h";        
+        assert.deepStrictEqual(whiteHorse.getMoves(myBoard), [[5,11,7,12,300]]);
     })
-    it("White horse / should return 5 moves from (13,11)", function() {
-        let horse = new Horse("white", 13, 11);
-        assert.deepStrictEqual(horse.getMoves(myBoard), [[13,11,11,10,600], [13,11,15,12,100], [13,11,12,13,30], [13,11,12,9,1000], [13,11,14,13,1000]]);
+    it("should return 1 move from (5,11) to (7,10)", function() {
+        myBoard[7][12] = "K";
+        myBoard[7][10] = "b";        
+        assert.deepStrictEqual(whiteHorse.getMoves(myBoard), [[5,11,7,10,400]]);
     })
-    it("White horse / should not return any move from (13,11)", function() {
-        let horse = new Horse("white", 13, 11);        
-        myBoard[11][10] = "R";
-        myBoard[15][12] = "P";        
-        myBoard[12][9] = "H";
-        myBoard[14][13] = "K";
-        myBoard[12][13] = "Q";        
-        assert.deepStrictEqual(horse.getMoves(myBoard), []);
+    it("should return 1 move from (5,11) to (4,13)", function() {
+        myBoard[7][10] = "Q";
+        myBoard[4][13] = "r";        
+        assert.deepStrictEqual(whiteHorse.getMoves(myBoard), [[5,11,4,13,600]]);
     })
+    it("should return 1 move from (5,11) to (4,9)", function() {
+        myBoard[4][13] = "B";
+        myBoard[4][9] = " ";        
+        assert.deepStrictEqual(whiteHorse.getMoves(myBoard), [[5,11,4,9,30]]);
+    })
+    it("should return 1 move from (5,11) to (6,13)", function() {
+        myBoard[4][9] = "P";
+        myBoard[6][13] = "k";        
+        assert.deepStrictEqual(whiteHorse.getMoves(myBoard), [[5,11,6,13,1000]]);
+    })
+    it("should return 1 move from (5,11) to (6,9)", function() {
+        myBoard[6][13] = "K";
+        myBoard[6][9] = " ";        
+        assert.deepStrictEqual(whiteHorse.getMoves(myBoard), [[5,11,6,9,30]]);
+    })        
 })

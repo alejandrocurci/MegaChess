@@ -69,9 +69,6 @@ service.onmessage = (e) => {
         endBoard.printBoard();                
     }
     if (msg.event == "your_turn") {
-        //let actualBoard = new Board(msg.data.board);
-        //actualBoard.printBoard();
-        //console.log("");
         let player = new Strategy(msg.data.board, msg.data.actual_turn, 2);
         let reply = player.strategy();
         sendMove(msg, reply);
